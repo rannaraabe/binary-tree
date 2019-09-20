@@ -30,24 +30,25 @@ public:
     void search(pont_no pt, int value, int f){
         if(pt != nullptr){
             if(pt.chave = value)
-                f = 1;
+                f = 1;      // Chave encontrada e pt aponta para nó onde a chave se encontra
             else
             {
                 if(value < pt.chave){
                     if(pt.esq = nullptr)
-                        f = 2;
+                        f = 2;      // Chave não encontrada e pt aponta para nó cuja árvore esquerda é vazia
                     else 
                         pt = pt.esq;
                 } else {
                     if(pt.dir = nullptr)
-                        f = 3;
+                        f = 3;      // // Chave não encontrada e pt aponta para nó cuja árvore direita é vazia
                     else
                         pt = pt.dir;
                 }
                 if(f < 1)
                     search(pt, value, f);
             } 
-        }
+        } else 
+            f = 0;      // Árvore vazia
     }
 
     /**
