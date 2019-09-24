@@ -1,0 +1,3 @@
+print
+mediana
+nth_element 5
