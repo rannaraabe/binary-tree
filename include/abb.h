@@ -4,6 +4,7 @@
  */ 
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 /**
@@ -85,6 +86,48 @@ public:
      * Função de remoção de um nó em uma árvore binária
      */ 
     void remove(pont_no pt, int value, int f){
+
+    }
+
+    /**
+     * Função retorna o n-ésimo elemento da árvore
+     */ 
+    int nth_element(int n){
+
+    }
+
+    /**
+     * Função retorna a posição da árvore do elemento passado por parâmetro
+     */ 
+    int position(int n){
+
+    }
+
+    /**
+     * Função retorna o elemento que contém a mediana da árvore 
+     */  
+    int mediana(){
+
+    }
+
+    /**
+     * Função retorna true se a árvore binária for cheia
+     */ 
+    bool is_full(){
+
+    }
+
+    /**
+     * Função retorna true se a árvore binária for completa
+     */ 
+    bool is_complete(){
+
+    }
+
+    /**
+     * Função retorna uma string com a sequência de visitação da árvore por nível
+     */  
+    string to_string(){
 
     }
 };
