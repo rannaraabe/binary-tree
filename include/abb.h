@@ -1,6 +1,6 @@
 /**
  * @file abb.h
- * @author Ranna Raabe
+ * @author Ranna Raabe e Frankleiton Levy
  */ 
 
 #include <iostream>
@@ -27,57 +27,65 @@ private:
 
 public:
     /**
+     * Construtor padrão
+     */ 
+    abb(){
+
+    }
+
+    /**
+     * Destrutor
+     */ 
+    ~abb(){ }
+
+    /**
      * Função de busca por um valor em árvore binária
      */ 
-    void search(pont_no pt, int value, int f){
+    node search(pont_no pt, int value){
         if(pt != nullptr){
-            if(pt->chave = value)
-                f = 1;      // Chave encontrada e pt aponta para nó onde a chave se encontra
+            if(pt->chave == value)
+                return *pt;      // Chave encontrada e pt aponta para nó onde a chave se encontra
             else
             {
-                if(value < pt->chave){
-                    if(pt->esq = nullptr)
-                        f = 2;      // Chave não encontrada e pt aponta para nó cuja árvore esquerda é vazia
-                    else 
-                        pt = pt->esq;
-                } else {
-                    if(pt->dir = nullptr)
-                        f = 3;      // Chave não encontrada e pt aponta para nó cuja árvore direita é vazia
-                    else
-                        pt = pt->dir;
-                }
-                if(f < 1)
-                    search(pt, value, f);
+                if(value < pt->chave)
+                    return search(pt->esq, value);  // Busca a chave na subarvore esquerda
+                else
+                    return search(pt->dir, value);  // Busca a chave na subárvore direita
             } 
-        } else 
-            f = 0;      // Árvore vazia
+        }
+
+        pt = nullptr;   // Caso não encontre a chave na ávore, retorna null
+        return *pt;
     }
 
     /**
      * Função de inserção de um nó em uma árvore binária
      */ 
-    void insert(pont_no pt, int value, int f){
+    void insert(pont_no pt, int value){
         pont_no pt_aux = nullptr; // Ponteiro auxiliar
-        search(pt, value, f);   // Busca o valor na árvore, antes de adicionar
 
-        if(f == 1)
+        if(search(pt, value).chave != NULL)       // Busca o valor na árvore, antes de adicionar
             cout << "Valor já está na árvore";
         else {
-            // ocupar(pt_aux);
-            pt_aux->chave = value;
-            pt_aux->esq = nullptr;
-            pt_aux->dir = nullptr;
-
-            if(f == 0)
-                this->raiz = nullptr;   // Árvore vazia
-            else {
-                if(f == 2)
-                    pt->esq = pt_aux;   // Chave na esquerda
-                else 
-                    pt->dir = pt_aux;   // Chave na direita
+            if (pt->chave > value){     // Inserir a esquerda
+                if(pt->esq != nullptr)
+                    insert(pt->esq, value);
+                else {
+                    pt_aux->chave = value;
+                    pt_aux->esq = nullptr;
+                    pt_aux->dir = nullptr;
+                }
+            }
+            else if (pt->chave <= value){   // Inserir a direita
+                if(pt->dir != nullptr)
+                    insert(pt->dir, value);
+                else {
+                    pt_aux->chave = value;
+                    pt_aux->esq = nullptr;
+                    pt_aux->dir = nullptr;
+                }
             }
         }
-            
     }
 
     /**
@@ -99,21 +107,7 @@ public:
         queue<node*> fila;
         fila.push(pt);
 
-        // else {
-        //     pt_aux->chave = pt->chave;
-        //     pt_aux->esq = pt->esq;
-        //     pt_aux->dir = pt->dir;
-
-        //     if(pt_aux->chave == value){
-        //         if (pt_aux->esq == nullptr)
-        //             pt_aux->dir;
-        //         else if(pt_aux->dir == nullptr)
-        //             pt_aux->esq;
-        //         else {
-                    
-        //         }
-        //     }
-        // }
+        
 
     }
 
