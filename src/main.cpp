@@ -9,6 +9,10 @@ using namespace std;
 
 
 int main(){
+    // TODO
+    // ler os valores da arvore
+    // ler os comandos para executar
+    // identificar cada comando e executar
 
     abb *arvore = new abb;
     int n;

@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <string>
-#include <queue>
 using namespace std;
 
 /**
@@ -18,6 +17,7 @@ struct node
     node *dir;
     int tam;
 
+    // Construtor do node
     node(int value) : chave(value), esq(nullptr), dir(nullptr), tam(1) { }
 };
 
@@ -31,13 +31,14 @@ public:
     /**
      * Construtor padrão
      */
-    abb(){ }
+    abb(){
+        raiz = nullptr;
+    }
 
     /**
      * Destrutor
      */
     ~abb(){ }
-
 
     /**
      * Função de busca por um valor em árvore binária
@@ -63,6 +64,9 @@ public:
         return pt;
     }
 
+    /**
+     * Função de inserção de um nó em uma árvore binária
+     */
     void insert(int value){
         if(raiz == nullptr){
             raiz = new node(value);     // Atribui o valor passado para raiz
@@ -71,9 +75,6 @@ public:
         insert_recursive(raiz, value);
     }
 
-    /**
-     * Função de inserção de um nó em uma árvore binária
-     */
     void insert_recursive(node *pt, int value){
         if(pt->chave == value){       // Busca o valor na árvore, antes de adicionar
             cout << "Valor [" << value << "] já está na árvore";
@@ -151,6 +152,7 @@ public:
             }
         } else {    // Caso 3 do slide (com duas subárvores)
             node* troca = largest_in_subtree(no->esq);  // Percorro ate chegar no maior elemento da subarvore da esq
+            // Tb existe a opcao de chamar a funcao smallest_in_subtree(); e percorrer até no menor elemento da subarvore da dir
             
             // Troca aponta para os filhos do nó
             troca->esq = no->esq;   
@@ -165,39 +167,45 @@ public:
                     pai->dir = troca;
                 }
             } 
-            // importante: precisa calcular o tamanho da árvore após a remoção!!!!!!
+            // TODO precisa calcular o tamanho da árvore após a remoção!!!!!!
         }
     }
 
+    /**
+     * Função auxiliar da função remove(). A função percorre a subarvore até chegar no maior elemento
+     */
     node* largest_in_subtree(node *raiz_sub){
         node* pt = raiz_sub;
 
-        if(pt == nullptr)
+        if(pt == nullptr)   // Caso não exista nó
             return nullptr;
 
-        while(pt->dir != nullptr)
+        while(pt->dir != nullptr)   // Percorre até chegar no ultimo nó 
             pt = pt->dir;
 
-        return pt;
+        return pt;  // Retorna o ultimo nó
     }
 
+    /**
+     * Função auxiliar da função remove(). A função percorre a subarvore até chegar no menor elemento
+     */
     node* smallest_in_subtree(node *raiz_sub){
         node* pt = raiz_sub;
 
-        if(pt == nullptr)
+        if(pt == nullptr)   // Caso não exista nó
             return nullptr;
 
-        while(pt->esq != nullptr)
+        while(pt->esq != nullptr)   // Percorre até chegar no ultimo nó 
             pt = pt->esq;
 
-        return pt;
+        return pt;  // Retorna o ultimo nó
     }
 
     /**
      * Função imprime a árvore
      */
     void print(){
-
+        // TODO
     }
 
     /**
@@ -210,17 +218,17 @@ public:
 
     node* nth_element_recursive(node *no, int n){
         if(no == nullptr)
-            return no;
+            return nullptr;
         
-        int tam_esq = no->esq != nullptr ? no->esq->tam : 0;
+        int tam_esq = no->esq != nullptr ? no->esq->tam : 0;    // Calcula o tamanho da subarvore esquerda
 
-        if(n - tam_esq == 0)
+        if(n - tam_esq == 0)    // Significa que você está no elemento da busca, basta retorna-lo
             return no;
 
-        if(tam_esq < n){
-            return nth_element_recursive(no->esq, n);
-        } else {
-            return nth_element_recursive(no->dir, n-tam_esq-1);
+        if(tam_esq < n){    
+            return nth_element_recursive(no->esq, n);   // Caso do elemento passado estar na subarvore esquerda
+        } else {    
+            return nth_element_recursive(no->dir, n-tam_esq-1); // Caso do elemento passado estar na subarvore direita
         }
     }
 
@@ -228,34 +236,45 @@ public:
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
     int position(int n){
-        
+        // TODO
     }
 
     /**
      * Função retorna o elemento que contém a mediana da árvore
      */
     int mediana(){
+        int med;   
+        
+        if(raiz->tam%2 == 0)
+            med = ((raiz->tam/2)-1 + (raiz->tam/2));    // Caso seja par, calculo a mediana  
 
+        med = raiz->tam/2;    // Caso seja impar, calulo a mediana
+        node* elemento = nth_element(med);     // Recupero o elemento
+
+        return elemento->chave;
     }
 
     /**
      * Função retorna true se a árvore binária for cheia
      */
     bool is_full(){
-
+        // TODO
+        // Conferir se até o penultimo nivel se <= n-1 folhas 
+        // Ainda n sei como fazer mas bora pensar
     }
 
     /**
-     * Função retorna true se a árvore binária for completa
+     * Função retorna true se a árvore binária for completa (e estritamente binária, no caso)
      */
     bool is_complete(){
-
+        // TODO
+        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas 
     }
 
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
     string to_string(){
-
+        // TODO
     }
 };
