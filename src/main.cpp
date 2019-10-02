@@ -4,27 +4,19 @@
  */ 
 
 #include <iostream>
-#include <fstream>
-#include "include/abb.h"
+#include "abb.h"
+using namespace std;
+
 
 int main(){
-    
-    abb *arvore = new abb();    // Árvore
-    int value;      // Valor que será lido
 
-    ifstream arq;
-    arq.open("../data/arvore.txt");
+    abb *arvore = new abb;
+    int n;
+    cin >> n;
 
-    if(!arq)
-    {
-        cerr << "Não foi possivel abrir o arquivo";
-        exit(1);
-    } else {
-        while (arq >> value) {
-
-        }
+    while(cin >> n){
+        cout << n;
     }
-    arq.close();
 
     return 0;
 }
