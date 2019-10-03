@@ -104,7 +104,7 @@ public:
         node *no = raiz;        // No começa na raiz
         node *pai = nullptr;    // Pai do nó
 
-        // Buscando o elemento na arvore
+        // Buscando o elemento na arvore assim para poder saber quem eh o pai
         while(no != nullptr){
             if(value < no->chave){  // Se estiver na esquerda da subarvore
                 pai = no;
@@ -129,9 +129,11 @@ public:
         if(no->dir == nullptr && no->esq == nullptr){
             if(esquerdo){
                 pai->esq = nullptr;
+                no->tam--;  // Diminuo o tamanho da arvore
             }
             else{
                 pai->dir = nullptr;
+                no->tam--;  // Diminuo o tamanho da arvore
             }
             return;
         }
@@ -140,14 +142,18 @@ public:
         if(no->dir == nullptr){     // Se só tem subarvore na esquerda
             if(esquerdo){
                 pai->esq = no->esq; // Caso 2 do slide
+                no->tam--;  // Diminuo o tamanho da arvore
             } else {
                 pai->dir = no->esq;
+                no->tam--;  // Diminuo o tamanho da arvore
             }
         } else if(no->esq == nullptr){ // Se só tem subarvore na direita
             if(esquerdo){
                 pai->esq = no->dir; // Caso 2 do slide (se fosse na direita)
+                no->tam--;  // Diminuo o tamanho da arvore
             } else {
                 pai->dir = no->dir;
+                no->tam--;  // Diminuo o tamanho da arvore
             }
         } else {    // Caso 3 do slide (com duas subárvores)
             node* troca = largest_in_subtree(no->esq);  // Percorro ate chegar no maior elemento da subarvore da esq
@@ -157,16 +163,19 @@ public:
             troca->esq = no->esq;   
             troca->dir = no->dir;
 
-            if(pai == nullptr)  // Caso seja a raiz
+            if(pai == nullptr){  // Caso seja a raiz
                 raiz = troca;
+                no->tam--;  // Diminuo o tamanho da arvore
+            }
             else{
                 if(esquerdo){
                     pai->esq = troca;
+                    no->tam--;  // Diminuo o tamanho da arvore
                 } else {
                     pai->dir = troca;
+                    no->tam--;  // Diminuo o tamanho da arvore
                 }
-            } 
-            // TODO precisa calcular o tamanho da árvore após a remoção!!!!!!
+            }
         }
     }
 
