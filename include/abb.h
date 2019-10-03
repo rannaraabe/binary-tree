@@ -76,7 +76,7 @@ public:
 
     void insert_recursive(node *pt, int value){
         if(pt->chave == value){       // Busca o valor na árvore, antes de adicionar
-            cout << "Valor [" << value << "] já está na árvore";
+            cout << "Valor [" << value << "] já está na árvore" << endl;
             return;
         } else if (pt->chave > value){     // Inserir a esquerda
             if(pt->esq != nullptr)
@@ -162,18 +162,20 @@ public:
             // Troca aponta para os filhos do nó
             troca->esq = no->esq;   
             troca->dir = no->dir;
+            
+            // TODO: achar o pai de troca e ter cuidado quando for dizer q pai_troca->dir == nullptr
 
             if(pai == nullptr){  // Caso seja a raiz
                 raiz = troca;
-                no->tam--;  // Diminuo o tamanho da arvore
+                troca->tam = no->tam-1;  // Diminuo o tamanho da arvore
             }
             else{
                 if(esquerdo){
                     pai->esq = troca;
-                    no->tam--;  // Diminuo o tamanho da arvore
+                    troca->tam = no->tam-1;  // Diminuo o tamanho da arvore
                 } else {
                     pai->dir = troca;
-                    no->tam--;  // Diminuo o tamanho da arvore
+                    troca->tam = no->tam-1;  // Diminuo o tamanho da arvore
                 }
             }
         }
@@ -212,14 +214,23 @@ public:
     /**
      * Função imprime a árvore no formato pré ordem (15(13(9(6()))(14()))(25(17())(28(27())(31()))))
      */
-    void print(node *no){
+    void print(){
+        node* no = raiz;
+
+        if(no == nullptr)
+            cout << "Árvore vazia" << endl;
+
+        print_recursive(no);
+    }
+
+    void print_recursive(node *no){
         if(no == nullptr)
             return;
         
         cout << "(" << no->chave;
 
-        print(no->esq);
-        print(no->dir);
+        print_recursive(no->esq);
+        print_recursive(no->dir);
 
         if(no->esq == nullptr && no->dir == nullptr)    // Caso o nó seja folha
             cout << "()";
@@ -256,9 +267,9 @@ public:
     /**
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
-    int position(int n){
-        // TODO
-    }
+    // int position(int n){
+    //     // TODO
+    // }
 
     /**
      * Função retorna o elemento que contém a mediana da árvore
@@ -278,38 +289,38 @@ public:
     /**
      * Função retorna true se a árvore binária for cheia
      */
-    bool is_full(){
-        // TODO
-        // Conferir se até o penultimo nivel se <= n-1 folhas 
-        // Ainda n sei como fazer mas bora pensar
-    }
+    // bool is_full(){
+    //     // TODO
+    //     // Conferir se até o penultimo nivel se <= n-1 folhas 
+    //     // Ainda n sei como fazer mas bora pensar
+    // }
 
     /**
      * Função retorna true se a árvore binária for completa (e estritamente binária, no caso)
      */
-    bool is_complete(){
-        // TODO
-        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
-        // Conferir tb se cada nó
-    }
+    // bool is_complete(){
+    //     // TODO
+    //     // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
+    //     // Conferir tb se cada nó
+    // }
 
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
-    string to_string(){
-        node* no = raiz;
+    // string to_string(){
+    //     node* no = raiz;
 
-        if(no == nullptr)   // Se a raiz for nula, não existe arvore
-            return "Árvore vazia";
+    //     if(no == nullptr)   // Se a raiz for nula, não existe arvore
+    //         return "Árvore vazia";
 
-        string arvore = "";
+    //     string arvore = "";
         
-        // TODO
-        // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
-        // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
-        // Pode usar uma fila, adicionar os valores da arvore lá
-        // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
+    //     // TODO
+    //     // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
+    //     // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
+    //     // Pode usar uma fila, adicionar os valores da arvore lá
+    //     // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
 
-        return arvore; 
-    }
+    //     return arvore; 
+    // }
 };
