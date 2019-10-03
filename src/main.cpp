@@ -11,11 +11,12 @@ using namespace std;
 int main(){
 
     abb *arvore = new abb;
-    int n;
-    cin >> n;
+    int no;
+    cin >> no;
 
-    while(cin >> n){
-        cout << n;
+    while(cin >> no){
+        
+        cout << no;
     }
 
     return 0;
