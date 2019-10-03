@@ -93,7 +93,8 @@ public:
         }
         int tam_esq = pt->esq != nullptr ? pt->esq->tam : 0;
         int tam_dir = pt->dir != nullptr ? pt->dir->tam : 0;
-        pt->tam = tam_esq + tam_dir;
+        pt->tam = tam_esq + tam_dir+1;
+
     }
 
     /**
@@ -116,7 +117,7 @@ public:
                 no = no->dir;
                 esquerdo = false;
             }
-            else{   // Se o nó atual eh o que estava sendo buscado  
+            else{   // Se o nó atual eh o que estava sendo buscado
                 break;
             }
         }
@@ -158,12 +159,16 @@ public:
         } else {    // Caso 3 do slide (com duas subárvores)
             node* troca = largest_in_subtree(no->esq);  // Percorro ate chegar no maior elemento da subarvore da esq
             // Tb existe a opcao de chamar a funcao smallest_in_subtree(); e percorrer até no menor elemento da subarvore da dir
-            
-            // Troca aponta para os filhos do nó
-            troca->esq = no->esq;   
-            troca->dir = no->dir;
-            
-            // TODO: achar o pai de troca e ter cuidado quando for dizer q pai_troca->dir == nullptr
+            node* pai_troca = largest_in_subtree_father(no->esq);        
+
+            if(pai_troca->dir == nullptr){
+                troca->dir = no->dir;
+            } else {
+                pai_troca->dir = nullptr;
+                // Troca aponta para os filhos do nó
+                troca->dir = no->dir;
+                troca->esq = no->esq;
+            }
 
             if(pai == nullptr){  // Caso seja a raiz
                 raiz = troca;
@@ -178,6 +183,9 @@ public:
                     troca->tam = no->tam-1;  // Diminuo o tamanho da arvore
                 }
             }
+
+            delete no;
+
         }
     }
 
@@ -190,7 +198,22 @@ public:
         if(pt == nullptr)   // Caso não exista nó
             return nullptr;
 
-        while(pt->dir != nullptr)   // Percorre até chegar no ultimo nó 
+        while(pt->dir != nullptr)   // Percorre até chegar no ultimo nó
+            pt = pt->dir;
+
+        return pt;  // Retorna o ultimo nó
+    }
+
+    node* largest_in_subtree_father(node *raiz_sub){
+        node* pt = raiz_sub;
+
+        if(pt == nullptr)   // Caso não exista nó
+            return nullptr;
+
+        if(pt->dir == nullptr)  // Já é o maior elemento, não tem pai
+            return nullptr;
+
+        while(pt->dir->dir != nullptr)   // Percorre até chegar no ultimo nó
             pt = pt->dir;
 
         return pt;  // Retorna o ultimo nó
@@ -205,7 +228,7 @@ public:
         if(pt == nullptr)   // Caso não exista nó
             return nullptr;
 
-        while(pt->esq != nullptr)   // Percorre até chegar no ultimo nó 
+        while(pt->esq != nullptr)   // Percorre até chegar no ultimo nó
             pt = pt->esq;
 
         return pt;  // Retorna o ultimo nó
@@ -226,7 +249,7 @@ public:
     void print_recursive(node *no){
         if(no == nullptr)
             return;
-        
+
         cout << "(" << no->chave;
 
         print_recursive(no->esq);
@@ -236,7 +259,7 @@ public:
             cout << "()";
         else if(no->esq != nullptr && no->dir == nullptr);   // Caso o nó não tenha filho na direita
         else if(no->esq == nullptr && no->dir != nullptr);   // Caso o nó não tenha filho na esquerda
-        
+
         cout << ")";
     }
 
@@ -250,17 +273,22 @@ public:
 
     // TODO corrigir seg fault q ta dando quando busca qualquer elemento que não está na primeira posicao
     node* nth_element_recursive(node *no, int n){
+        if (raiz->tam < n){
+            cout << "A árvore não possui essa posição!" << endl;
+            return new node(-1e9);
+        }
+        
         if(no == nullptr)
             return nullptr;
-        
+
         int tam_esq = no->esq != nullptr ? no->esq->tam : 0;    // Calcula o tamanho da subarvore esquerda
 
         if(n - tam_esq == 0)    // Significa que você está no elemento da busca, basta retorna-lo
             return no;
 
-        if(tam_esq < n){    
+        if(tam_esq > n){
             return nth_element_recursive(no->esq, n);   // Caso do elemento passado estar na subarvore esquerda
-        } else {    
+        } else {
             return nth_element_recursive(no->dir, n-tam_esq-1); // Caso do elemento passado estar na subarvore direita
         }
     }
@@ -276,16 +304,8 @@ public:
      * Função retorna o elemento que contém a mediana da árvore
      */
     int mediana(){
-        int med;   
-        
-        if(raiz->tam%2 == 0)
-            med = ((raiz->tam/2)-1 + (raiz->tam/2));    // Caso seja par, calculo a mediana  
-        // TODO p ajeitar caso seja par, tem que retornar o menor
-
-        med = raiz->tam/2;    // Caso seja impar, calulo a mediana
-        node* elemento = nth_element(med);     // Recupero o elemento
-
-        return elemento->chave;
+        // Se for impar, retorna o elemento raiz->tam/2, se for par retorna o raiz->tam/2-1
+        return nth_element(raiz->tam/2 - (1-(raiz->tam%2)))->chave;
     }
 
     /**
@@ -293,7 +313,7 @@ public:
      */
     bool is_full(){
         // TODO
-        // Conferir se até o penultimo nivel se <= n-1 folhas 
+        // Conferir se até o penultimo nivel se <= n-1 folhas
         // Ainda n sei como fazer mas bora pensar
     }
 
@@ -316,13 +336,13 @@ public:
             return "Árvore vazia";
 
         string arvore = "";
-        
+
         // TODO
         // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
         // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
         // Pode usar uma fila, adicionar os valores da arvore lá
         // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
 
-        return arvore; 
+        return arvore;
     }
 };

@@ -31,9 +31,9 @@ int main(){
     cout << "" << endl;
 
 
-    cout << arvore.nth_element(1)->chave << endl;   // 15
-    // cout << arvore.nth_element(2)->chave << endl;
-    // cout << arvore.nth_element(9)->chave << endl;
+    cout << arvore.nth_element(0)->chave << endl;   // 10
+    cout << arvore.nth_element(2)->chave << endl;
+    cout << arvore.nth_element(9)->chave << endl;
 
     arvore.insert(6);   // Novo valor
     arvore.insert(40);  // Valor repetido
@@ -42,7 +42,7 @@ int main(){
     arvore.insert(40);
 
     arvore.remove(25);  // Removendo um nó com uma subarvore vazia
-    // arvore.remove(15);  // Removendo uma arvore q possui duas subarvores
+    arvore.remove(15);  // Removendo uma arvore q possui duas subarvores
 
     cout << "" << endl;
     cout << "árvore final: " << endl;
