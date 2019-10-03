@@ -248,6 +248,7 @@ public:
         return nth_element_recursive(raiz, n);
     }
 
+    // TODO corrigir seg fault q ta dando quando busca qualquer elemento que não está na primeira posicao
     node* nth_element_recursive(node *no, int n){
         if(no == nullptr)
             return nullptr;
@@ -267,9 +268,9 @@ public:
     /**
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
-    // int position(int n){
-    //     // TODO
-    // }
+    int position(int n){
+        // TODO
+    }
 
     /**
      * Função retorna o elemento que contém a mediana da árvore
@@ -289,38 +290,38 @@ public:
     /**
      * Função retorna true se a árvore binária for cheia
      */
-    // bool is_full(){
-    //     // TODO
-    //     // Conferir se até o penultimo nivel se <= n-1 folhas 
-    //     // Ainda n sei como fazer mas bora pensar
-    // }
+    bool is_full(){
+        // TODO
+        // Conferir se até o penultimo nivel se <= n-1 folhas 
+        // Ainda n sei como fazer mas bora pensar
+    }
 
     /**
      * Função retorna true se a árvore binária for completa (e estritamente binária, no caso)
      */
-    // bool is_complete(){
-    //     // TODO
-    //     // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
-    //     // Conferir tb se cada nó
-    // }
+    bool is_complete(){
+        // TODO
+        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
+        // Conferir tb se cada nó
+    }
 
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
-    // string to_string(){
-    //     node* no = raiz;
+    string to_string(){
+        node* no = raiz;
 
-    //     if(no == nullptr)   // Se a raiz for nula, não existe arvore
-    //         return "Árvore vazia";
+        if(no == nullptr)   // Se a raiz for nula, não existe arvore
+            return "Árvore vazia";
 
-    //     string arvore = "";
+        string arvore = "";
         
-    //     // TODO
-    //     // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
-    //     // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
-    //     // Pode usar uma fila, adicionar os valores da arvore lá
-    //     // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
+        // TODO
+        // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
+        // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
+        // Pode usar uma fila, adicionar os valores da arvore lá
+        // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
 
-    //     return arvore; 
-    // }
+        return arvore; 
+    }
 };
