@@ -11,7 +11,7 @@ using namespace std;
 int main(){
     // TODO
     // ler os valores da arvore
-    // ler os comandos para executar
+    // ler os comandos para executar (dá p fazer um switch case, eh pratico)
     // identificar cada comando e executar
 
     abb *arvore = new abb;
@@ -19,7 +19,6 @@ int main(){
     cin >> no;
 
     while(cin >> no){
-        
         cout << no;
     }
 

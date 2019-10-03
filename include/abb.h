@@ -24,7 +24,6 @@ struct node
 class abb
 {
 private:
-    node *pont_no;        // Definindo um ponteiro para o nó
     node *raiz;    // Nó raiz
 
 public:
@@ -202,10 +201,23 @@ public:
     }
 
     /**
-     * Função imprime a árvore
+     * Função imprime a árvore no formato pré ordem (15(13(9(6()))(14()))(25(17())(28(27())(31()))))
      */
-    void print(){
-        // TODO
+    void print(node *no){
+        if(no == nullptr)
+            return;
+        
+        cout << "(" << no->chave;
+
+        print(no->esq);
+        print(no->dir);
+
+        if(no->esq == nullptr && no->dir == nullptr)    // Caso o nó seja folha
+            cout << "()";
+        else if(no->esq != nullptr && no->dir == nullptr);   // Caso o nó não tenha filho na direita
+        else if(no->esq == nullptr && no->dir != nullptr);   // Caso o nó não tenha filho na esquerda
+        
+        cout << ")";
     }
 
     /**
@@ -268,13 +280,27 @@ public:
      */
     bool is_complete(){
         // TODO
-        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas 
+        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
+        // Conferir tb se cada nó
     }
 
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
     string to_string(){
+        node* no = raiz;
+
+        if(no == nullptr)   // Se a raiz for nula, não existe arvore
+            return "Árvore vazia";
+
+        string arvore = "";
+        
         // TODO
+        // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
+        // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
+        // Pode usar uma fila, adicionar os valores da arvore lá
+        // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
+
+        return arvore; 
     }
 };
