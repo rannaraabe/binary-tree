@@ -280,6 +280,7 @@ public:
         
         if(raiz->tam%2 == 0)
             med = ((raiz->tam/2)-1 + (raiz->tam/2));    // Caso seja par, calculo a mediana  
+        // TODO p ajeitar caso seja par, tem que retornar o menor
 
         med = raiz->tam/2;    // Caso seja impar, calulo a mediana
         node* elemento = nth_element(med);     // Recupero o elemento
