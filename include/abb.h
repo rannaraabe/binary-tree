@@ -296,8 +296,23 @@ public:
     /**
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
-    int position(int n){
+    int position(int n, int aux = 0, node *no = raiz){
         // TODO
+        if(no != nullptr)
+        {
+            //Visita o primeiro nó possivel da esquerda
+            position(n, aux++, no->esq);
+            
+            //verifica se a chave do nó visitado é o valor a ser buscado
+            if (no->chave == n)
+            {
+                //retorna a posição
+                return aux;
+            }
+            
+            //Visita nó possivel da direita
+            position(n, aux++, no->dir);
+        }
     }
 
     /**
@@ -314,7 +329,7 @@ public:
     bool is_full(){
         // TODO
         // Conferir se até o penultimo nivel se <= n-1 folhas
-        // Ainda n sei como fazer mas bora pensar
+        // Ainda n sei como fazer mas bora pensar, pensei que só, mas num saiu nao kkk
     }
 
     /**
@@ -324,6 +339,7 @@ public:
         // TODO
         // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
         // Conferir tb se cada nó
+        // Cada nó tem que ter o ultimo tamanho igual para todas as folhas, com esq e dir nulos, como salvamos isso pra verificar futuramente ?
     }
 
     /**
