@@ -270,7 +270,7 @@ public:
      */
     node* nth_element(int n){
         // Caso base
-        return nth_element_recursive(raiz, n);
+        return nth_element_recursive(raiz, n+1);
     }
 
     node* nth_element_recursive(node *no, int n){
@@ -296,7 +296,7 @@ public:
      */
     int position(int value){
         if(search(value) != nullptr)    // Primeiro procuro se o elemento está na árvore
-            return position_recursive(raiz, value, size(raiz->esq), size(raiz->dir));
+            return 1+position_recursive(raiz, value, size(raiz->esq), size(raiz->dir));
 
         cout << "erro-position: O elemento não está na árvore!\n";
         return -1e9;    // Retorno saída qualquer caso o elemente não esteja na árvore

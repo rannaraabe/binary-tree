@@ -13,9 +13,6 @@
 
 using namespace std;
 
-// g++ -std=c++11 -I include/ src/main.cpp -o out
-// ./out < data/teste.txt
-
 enum cod_funcoes{
     BUSCA,
     INSIRA,
