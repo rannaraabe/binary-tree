@@ -25,13 +25,16 @@ class abb
 {
 private:
     node *raiz;    // Nó raiz
+    int *arr_simetrica; 
 
 public:
     /**
      * Construtor padrão
      */
     abb(){
+
         raiz = nullptr;
+        arr_simetrica = new int();
     }
 
     /**
@@ -257,6 +260,7 @@ public:
 
         if(no->esq == nullptr && no->dir == nullptr)    // Caso o nó seja folha
             cout << "()";
+
         else if(no->esq != nullptr && no->dir == nullptr);   // Caso o nó não tenha filho na direita
         else if(no->esq == nullptr && no->dir != nullptr);   // Caso o nó não tenha filho na esquerda
 
@@ -296,23 +300,36 @@ public:
     /**
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
-    int position(int n, int aux = 0, node *no = raiz){
+
+    int position(int n)
+    {
+        node *no = raiz;
+        position(n, 1, no);
+    }
+
+    int position(int n, int aux, node *no){
         // TODO
         if(no != nullptr)
         {
             //Visita o primeiro nó possivel da esquerda
-            position(n, aux++, no->esq);
+            position(n, aux, no->esq);
             
             //verifica se a chave do nó visitado é o valor a ser buscado
-            if (no->chave == n)
-            {
-                //retorna a posição
-                return aux;
-            }
+            // if (no->chave == n)
+            // {
+            //     //retorna a posição
+            //     return aux;
+            // }
+
+            cout << " No: " << no->chave;
+            cout << " Aux: " << aux;
+            cout << "|";
             
             //Visita nó possivel da direita
-            position(n, aux++, no->dir);
+            position(n, ++aux, no->dir);
+
         }
+
     }
 
     /**
@@ -330,6 +347,33 @@ public:
         // TODO
         // Conferir se até o penultimo nivel se <= n-1 folhas
         // Ainda n sei como fazer mas bora pensar, pensei que só, mas num saiu nao kkk
+
+        node *no = raiz;
+        return is_full_rec(no);
+        
+    }
+
+    bool is_full_rec(node *no)
+    {
+        //Caso arvore vazia
+        if (no == nullptr)
+        {
+            return true;
+        }
+
+        //Caso no seja folha
+        if (no->esq == nullptr && no->dir == nullptr)
+        {
+           return true;
+        }
+
+        //Caso os nos da esqueda e direita nao sejam nulas e as subarvores esqueda e direita foram cheias
+        if ((no->esq) && (no->dir))
+        {
+            return (is_full_rec(no->esq) && is_full_rec(no->dir));
+        }
+
+        return false;   
     }
 
     /**
@@ -345,20 +389,50 @@ public:
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
-    string to_string(){
-        node* no = raiz;
 
-        if(no == nullptr)   // Se a raiz for nula, não existe arvore
-            return "Árvore vazia";
+    void to_string()
+    {
+        struct node* no = raiz;
+        int h = height(); 
+        int i; 
+        for (i=1; i<=h; i++) 
+        { 
+            to_string(no, i); 
+            cout << endl; 
+        } 
+    }
 
-        string arvore = "";
+    string to_string(struct node* no, int level){
 
-        // TODO
-        // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
-        // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
-        // Pode usar uma fila, adicionar os valores da arvore lá
-        // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
+        string arvore;
+
+        if (no == NULL) 
+            return "Arvore vazia"; 
+        if (level == 1) 
+           cout << no->chave << " "; 
+        else if (level > 1) 
+        { 
+            to_string(no->esq, level-1); 
+            to_string(no->dir, level-1); 
+        } 
+
 
         return arvore;
+    }
+
+    //Funcao para calcular a altura da arvore, serve como base para o metodo toString
+    int height()
+    {
+        node *no = raiz;
+        return heigt_rec(no);
+    }
+
+    int heigt_rec(node *no, int h = 1)
+    {   
+        int h1 = 0, h2 = 0;
+        h1 = no->esq != nullptr ? heigt_rec(no->esq, h++): h1 = 0;
+        h2 = no->dir != nullptr ? heigt_rec(no->dir, h++): h2 = 0;
+
+        return h;
     }
 };

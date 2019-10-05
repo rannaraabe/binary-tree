@@ -44,10 +44,32 @@ int main(){
     arvore.remove(25);  // Removendo um nó com uma subarvore vazia
     arvore.remove(15);  // Removendo uma arvore q possui duas subarvores
 
+   
+
+    arvore.position(12);
+    //cout << arvore.position(40) << endl;
+    // cout <<  << endl;
+    //cout << arvore.position(6) << endl;
+
+    cout << arvore.height() << endl;
+
+    arvore.to_string();
+
+    if (arvore.is_full())
+    {
+        cout << "eh cheia" << endl;
+    }else
+    {
+        cout << "nao eh cheia" << endl;
+    }
+    
+    
+
     cout << "" << endl;
     cout << "árvore final: " << endl;
     arvore.print();
-    cout << "" << endl;    
+    cout << "" << endl;  
+
     return 0;
 
 }
