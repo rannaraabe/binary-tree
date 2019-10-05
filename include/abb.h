@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include <stack>
+#include <queue>
 using namespace std;
 
 /**
@@ -161,18 +161,31 @@ public:
                 no->tam--;  // Diminuo o tamanho da arvore
             }
         } else {    // Caso 3 do slide (com duas subárvores)
+            cout << "aqui" << endl;
             node* troca = largest_in_subtree(no->esq);  // Percorro ate chegar no maior elemento da subarvore da esq
             // Tb existe a opcao de chamar a funcao smallest_in_subtree(); e percorrer até no menor elemento da subarvore da dir
+            cout << "aqui2" << endl;            
             node* pai_troca = largest_in_subtree_father(no->esq);        
 
+            cout << "aqui3" << endl;
+
             if(pai_troca->dir == nullptr){
+                cout << "aqui4" << endl;
                 troca->dir = no->dir;
+                cout << "aqui5" << endl;
             } else {
+                cout << "aqui6" << endl;
+
                 pai_troca->dir = nullptr;
                 // Troca aponta para os filhos do nó
                 troca->dir = no->dir;
                 troca->esq = no->esq;
+                cout << "aqui7" << endl;
+
             }
+
+            cout << "aquiiiiiiiiiii" << endl;
+
 
             if(pai == nullptr){  // Caso seja a raiz
                 raiz = troca;
@@ -274,13 +287,10 @@ public:
     }
 
     node* nth_element_recursive(node *no, int n){
-        if (raiz->tam < n){
+        if (no == nullptr || no->tam < n){
             cout << "erro-nth_element: A árvore não possui essa posição!\n";
             return new node(-1e9);
         }
-        
-        if(no == nullptr)
-            return nullptr;
 
         int tam_esq = no->esq != nullptr ? no->esq->tam : 0;    // Calcula o tamanho da subarvore esquerda
 
@@ -392,47 +402,31 @@ public:
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
     string to_string(){
-        node* no = raiz;
+        string str = "";
 
-        if(no != nullptr){    
-            int h = height();   // Calculo a altura da árvore
-
-            for(int i = 1; i <= h; i++)    // Calcula o nível da árvore, para passar para funcao
-                return to_string_recursive(no, i);
+        if(raiz == nullptr){    // Confiro antes se a árvore está vazia
+            cout << "erro-to_string: Árvore está vazia!\n" << endl;
+            return str;
         }
 
-        return "erro-to_string: Árvore está vazia!\n";    // Caso não entre na condição a arvore eh vazia
+        // Uso uma pilha para guardar os filhos do nó 
+        queue<node*> q;
+        q.push(raiz);   // Guardo a raiz
 
-    }
+        while(!q.empty()){  
+            node *no = q.front();
+            q.pop();
 
-    string to_string_recursive(node* no, int level){
-        string arvore;
+            str += std::to_string(no->chave) + " ";  // Vou concatenando o valores dos nós
+            
+            if(no->esq != nullptr)  // Se tiver filho esquerdo, guardo na fila
+                q.push(no->esq);
 
-        if(level == 1) 
-            cout << no->chave << " "; 
-
-        else if(level > 1){
-            to_string_recursive(no->esq, level-1);
-            to_string_recursive(no->dir, level-1); 
+            if(no->dir != nullptr)  // Se tiver filho direito, guardo na fila
+                q.push(no->dir);
         }
-
-        return arvore;
-    }
-
-     /**
-      * Função auxiliar para a função to_string(). Calcula a altura da árvore.
-      */ 
-    int height(){
-        node *no = raiz;
-        return height_recursive(no);
-    }
-
-    int height_recursive(node *no, int h = 1){   
-        int h1 = 0, h2 = 0;
-
-        h1 = no->esq != nullptr ? height_recursive(no->esq, h++) : h1 = 0;
-        h2 = no->dir != nullptr ? height_recursive(no->dir, h++) : h2 = 0;
-
-        return h;
+        
+        str.pop_back();
+        return str;
     }
 };

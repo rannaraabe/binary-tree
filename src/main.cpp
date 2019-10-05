@@ -52,6 +52,17 @@ int main(){
 	arquivo.open("./data/comandos.txt");
 	
     string comando_linha; // Para salvar o comando da linha do arquivo
+    
+    // Inicializando o map
+    map_funcoes["BUSCA"] = BUSCA;
+    map_funcoes["INSIRA"] = INSIRA;
+    map_funcoes["REMOVA"] = REMOVA;
+    map_funcoes["ENESIMO"] = ENESIMO;
+    map_funcoes["POSICAO"] = POSICAO;
+    map_funcoes["MEDIANA"] = MEDIANA;
+    map_funcoes["CHEIA"] = CHEIA;
+    map_funcoes["COMPLETA"] = COMPLETA;
+    map_funcoes["IMPRIMA"] = IMPRIMA; 
 
     // Enquanto tiver comandos para ler
 	while(getline(arquivo, comando_linha)){
@@ -80,11 +91,11 @@ int main(){
 				break;
 			case ENESIMO:
                 ler >> parametro;
-                cout << ">> N-ésimo: " << arvore.nth_element(parametro) << endl;
+                cout << ">> " << parametro << "-ésimo: " << arvore.nth_element(parametro)->chave << endl;
 				break;
             case POSICAO:
                 ler >> parametro;
-                cout << ">> Posição: " << arvore.position(parametro) << endl;
+                cout << ">> Posição do " << parametro << ": " << arvore.position(parametro) << endl;
                 break;
             case MEDIANA:
                 cout << ">> Mediana: " << arvore.mediana() << endl;
@@ -92,15 +103,17 @@ int main(){
             case CHEIA:
                 if(arvore.is_full())
                     cout << ">> Árvore eh cheia" << endl;
-                cout << ">> Árvore não eh cheia" << endl;
+                else
+                    cout << ">> Árvore não eh cheia" << endl;
                 break;
             case COMPLETA:
                 if(arvore.is_complete())
                     cout << ">> Árvore eh completa" << endl;
-                cout << ">> Árvore não eh completa" << endl;
+                else
+                    cout << ">> Árvore não eh completa" << endl;
                 break;
             case IMPRIMA:
-                cout << ">>> Imprimindo árvore: " << arvore.to_string() << endl;
+                cout << ">> Imprimindo árvore: " << arvore.to_string() << endl;
                 break;
             default:
                 cout << "" << endl;
