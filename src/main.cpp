@@ -63,13 +63,27 @@ int main(){
     // cout << arvore.position(40) << endl;    // 6
 
     cout << "" << endl;
-    cout << "1 false, 0 true" << endl;
-    cout << arvore.is_complete() << endl;
 
+    // if(arvore.is_complete())
+    //     cout << "eh completa" << endl;
+    // else
+    //     cout << "nao eh completa" << endl;
+
+
+    cout << arvore.height() << endl;
+    arvore.to_string();
     cout << "" << endl;
-    cout << "árvore final: " << endl;
-    arvore.print();
-    cout << "" << endl;    
+
+
+    // if(arvore.is_full())
+    //     cout << "eh cheia" << endl;
+    // else
+    //     cout << "nao eh cheia" << endl;
+
+    // cout << "" << endl;
+    // cout << "árvore final: " << endl;
+    // arvore.print();
+    // cout << "" << endl;    
     return 0;
 
 }

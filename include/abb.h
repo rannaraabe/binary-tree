@@ -346,11 +346,14 @@ public:
         if(no == nullptr)  // Caso a árvore seja vazia
             return false;
 
-	    if(no->esq == no->dir && no->dir == nullptr)  // Caso até o último nível possua n-1 folhas
+	    if(no->esq == no->dir && no->dir == nullptr)  // Caso o nó seja folha
 		    return true;
 	    
-        // TODO caso os dois nós dir e esq sejam nulos
-    
+        //Caso os nós da esqueda e direita nao sejam nulos e as subarvores esqueda e direita foram cheias
+        if ((no->esq) && (no->dir))
+            return (is_full_recursive(no->esq) && is_full_recursive(no->dir));
+
+        return false;    
     }
 
     /**
@@ -381,23 +384,59 @@ public:
             return true;
 
         return false;  // O nó raiz só possui 1 filho
-        
-        // TODO teste está dando errado, deve ser alguma besteirinha
     }
 
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
+
     string to_string(){
         node* no = raiz;
 
-        if(no == nullptr)   // Se a raiz for nula, não existe arvore
-            return "Árvore vazia";
+        if(no != nullptr){    
+            int h = height();   // Calculo a altura da árvore
 
-        string arvore = "";
+            for(int i = 1; i <= h; i++)    // Calcula o nível da árvore, para passar para funcao
+                return to_string_recursive(no, i);
+        }
 
-        // TODO
+        return "err-to_string: Árvore está vazia! ";    // Caso não entre na condição a arvore eh vazia
+
+    }
+
+    string to_string_recursive(node* no, int level){
+        string arvore;
+
+        if(level == 1) 
+            cout << no->chave << " "; 
+
+        else if(level > 1){
+            to_string_recursive(no->esq, level-1);
+            to_string_recursive(no->dir, level-1); 
+        }
 
         return arvore;
+
+        // TODO: CORRIGIR
+    }
+
+     /**
+      * Função auxiliar para a função to_string(). Calcula a altura da árvore.
+      */ 
+
+    int height(){
+        node *no = raiz;
+        return height_recursive(no);
+    }
+
+    int height_recursive(node *no, int h = 1){   
+        int h1 = 0, h2 = 0;
+
+        h1 = no->esq != nullptr ? height_recursive(no->esq, h++) : h1 = 0;
+        h2 = no->dir != nullptr ? height_recursive(no->dir, h++) : h2 = 0;
+
+        return h;
+
+        // TODO: CORRIGIR
     }
 };
