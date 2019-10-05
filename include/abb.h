@@ -76,7 +76,7 @@ public:
 
     void insert_recursive(node *pt, int value){
         if(pt->chave == value){       // Busca o valor na árvore, antes de adicionar
-            cout << "Valor [" << value << "] já está na árvore" << endl;
+            cout << "err-insert: Valor [" << value << "] já está na árvore" << endl;
             return;
         } else if (pt->chave > value){     // Inserir a esquerda
             if(pt->esq != nullptr)
@@ -241,7 +241,7 @@ public:
         node* no = raiz;
 
         if(no == nullptr)
-            cout << "Árvore vazia" << endl;
+            cout << "err-print: Árvore vazia" << endl;
 
         print_recursive(no);
     }
@@ -274,7 +274,7 @@ public:
     // TODO corrigir seg fault q ta dando quando busca qualquer elemento que não está na primeira posicao
     node* nth_element_recursive(node *no, int n){
         if (raiz->tam < n){
-            cout << "A árvore não possui essa posição!" << endl;
+            cout << "err-nth_element: A árvore não possui essa posição! ";
             return new node(-1e9);
         }
         
@@ -296,23 +296,35 @@ public:
     /**
      * Função retorna a posição da árvore do elemento passado por parâmetro (por ordem simétrica)
      */
-    int position(int n, int aux = 0, node *no = raiz){
-        // TODO
-        if(no != nullptr)
-        {
-            //Visita o primeiro nó possivel da esquerda
-            position(n, aux++, no->esq);
-            
-            //verifica se a chave do nó visitado é o valor a ser buscado
-            if (no->chave == n)
-            {
-                //retorna a posição
-                return aux;
-            }
-            
-            //Visita nó possivel da direita
-            position(n, aux++, no->dir);
+    int position(int value){
+        if(search(value) != nullptr)    // Primeiro procuro se o elemento está na árvore
+            return position_recursive(raiz, value, size(raiz->esq), size(raiz->dir));
+
+        cout << "err-position: O elemento não está na árvore! ";
+        return -1e9;    // Retorno saída qualquer caso o elemente não esteja na árvore
+    }
+
+    int position_recursive(node* no, int value, int l, int r){
+        if(no->chave == value)  // Se o valor do nó atual for o valor que eu busco, retorno o valor de left (l)
+            return l;
+
+        if(no->chave > value){  // Busco na subarvore esquerda
+            l = l - size(no->esq->dir) - 1;
+            r = r + size(no->esq->dir) + 1;
+            return position_recursive(no->esq, value, l, r);
+        } else {    // Busco na subarvore direira
+            return position_recursive(no->dir, value, l+size(no->dir->esq)+1, r-size(no->dir->esq)+1);
         }
+    }
+
+    /**
+     * Função auxiliar da função position(). Retorna o tamanho do nó
+     */  
+    int size(node* no){
+        if(no == nullptr)
+            return 0;
+
+        return no->tam;
     }
 
     /**
