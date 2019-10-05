@@ -77,7 +77,7 @@ public:
 
     void insert_recursive(node *pt, int value){
         if(pt->chave == value){       // Busca o valor na árvore, antes de adicionar
-            cout << "erro-insert: Valor [" << value << "] já está na árvore!\n" << endl;
+            cout << "erro-insert: Valor [" << value << "] já está na árvore!\n";
             return;
         } else if (pt->chave > value){     // Inserir a esquerda
             if(pt->esq != nullptr)
@@ -107,7 +107,7 @@ public:
         node *pai = nullptr;    // Pai do nó
 
         if(search(value) == nullptr){    // Caso o nó não exista na árvore, eu encerro
-            cout << "erro-remove: Valor [" << value << "] não está na árvore!\n" << endl;
+            cout << "erro-remove: Valor [" << value << "] não está na árvore!\n";
             return;
         }
 
@@ -161,31 +161,18 @@ public:
                 no->tam--;  // Diminuo o tamanho da arvore
             }
         } else {    // Caso 3 do slide (com duas subárvores)
-            cout << "aqui" << endl;
             node* troca = largest_in_subtree(no->esq);  // Percorro ate chegar no maior elemento da subarvore da esq
             // Tb existe a opcao de chamar a funcao smallest_in_subtree(); e percorrer até no menor elemento da subarvore da dir
-            cout << "aqui2" << endl;            
             node* pai_troca = largest_in_subtree_father(no->esq);        
 
-            cout << "aqui3" << endl;
-
-            if(pai_troca->dir == nullptr){
-                cout << "aqui4" << endl;
+            if(pai_troca == nullptr){
                 troca->dir = no->dir;
-                cout << "aqui5" << endl;
             } else {
-                cout << "aqui6" << endl;
-
                 pai_troca->dir = nullptr;
                 // Troca aponta para os filhos do nó
                 troca->dir = no->dir;
                 troca->esq = no->esq;
-                cout << "aqui7" << endl;
-
             }
-
-            cout << "aquiiiiiiiiiii" << endl;
-
 
             if(pai == nullptr){  // Caso seja a raiz
                 raiz = troca;
@@ -358,7 +345,7 @@ public:
         if(no == nullptr)  // Caso a árvore seja vazia
             return false;
 
-	    if(no->esq == no->dir && no->dir == nullptr)  // Caso o nó seja folha
+	    if(no->esq == nullptr && no->dir == nullptr)  // Caso o nó seja folha
 		    return true;
 	    
         //Caso os nós da esqueda e direita nao sejam nulos e as subarvores esqueda e direita foram cheias
@@ -373,29 +360,25 @@ public:
      */
     bool is_complete(){
         node* no = raiz;
-        return is_complete_recursive(no);  // Chamo a função recursiva
+        int altura = height(raiz);
+        return is_complete_recursive(no, altura);  // Chamo a função recursiva
     }
 
-    bool is_complete_recursive(node* no){
+    bool is_complete_recursive(node* no, int altura){
+         if(altura <= 2)
+            return true;
+
         if(no == nullptr)  // Caso a árvore seja vazia
             return false;
 
-        // Caso o nó possua dois filhos
-        if(no->esq != nullptr && no->dir != nullptr)
-            return true;
+        return is_complete_recursive(no->esq, altura-1) && is_complete_recursive(no->dir, altura-1); 
+    }
 
-        if(no->esq == nullptr){
-            if(is_complete_recursive(no->dir))  // Chamo a funcao para verificar se o filho direito tambem eh nulo
-                return true;
+    int height(node *no){
+        if(no == nullptr)
+            return 0;
 
-            return false;   // O nó raiz só possui 1 filho
-        } 
-        
-        // Verifico o mesmo para o caso do filho direito ser nulo
-        if(is_complete_recursive(no->esq))  // Verifico se o filho esq tambem eh nulo
-            return true;
-
-        return false;  // O nó raiz só possui 1 filho
+        return max(height(no->esq), height(no->dir))+1;
     }
 
     /**
@@ -405,7 +388,7 @@ public:
         string str = "";
 
         if(raiz == nullptr){    // Confiro antes se a árvore está vazia
-            cout << "erro-to_string: Árvore está vazia!\n" << endl;
+            cout << "erro-to_string: Árvore está vazia!\n";
             return str;
         }
 

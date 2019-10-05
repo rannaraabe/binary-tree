@@ -43,9 +43,9 @@ int main(){
     }
 
     // Printando a árvore inicial, sem nenhuma modificação
-    cout << ">>> Árvore inicial: " << endl;
+    cout << "Árvore inicial: " << endl;
     arvore.print();
-    cout << "\n" << endl;
+    cout << endl << endl;
 
     // Lendo arquivo de comandos
     fstream arquivo;
@@ -81,13 +81,13 @@ int main(){
                 break;            
             case INSIRA:
                 ler >> parametro;
-                arvore.insert(parametro);
                 cout << ">> Inserindo elemento " << parametro << endl;
+                arvore.insert(parametro);
 				break;
 			case REMOVA:
                 ler >> parametro;
-                arvore.remove(parametro);
                 cout << ">> Removendo elemento " << parametro << endl;
+                arvore.remove(parametro);
 				break;
 			case ENESIMO:
                 ler >> parametro;
@@ -125,10 +125,10 @@ int main(){
     arquivo.close();  
 
     // Só pra testar mesmo
-    cout << "" << endl;
-    cout << ">>> Árvore final: " << endl;
+    cout << endl;
+    cout << "Árvore final: " << endl;
     arvore.print();
-    cout << "" << endl;   
+    cout << endl;   
 
     return 0;
 }
