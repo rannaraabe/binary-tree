@@ -36,12 +36,14 @@ int main(){
 
     arvore.insert(6);   // Novo valor
     arvore.insert(40);  // Valor repetido
+    arvore.insert(4);
 
     arvore.remove(40);  // Removendo uma folha
     arvore.insert(40);
 
     arvore.remove(25);  // Removendo um nó com uma subarvore vazia
-    arvore.remove(15);  // Removendo uma arvore q possui duas subarvores
+    arvore.remove(15);  // Removendo o nó raiz
+    arvore.remove(10);  // Removendo um nó q possui duas subarvores
 
     cout << arvore.position(15) << endl;    // null
     cout << arvore.position(6) << endl;     // 1

@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
 
 /**
@@ -105,8 +106,13 @@ public:
         node *no = raiz;        // No começa na raiz
         node *pai = nullptr;    // Pai do nó
 
+        if(search(value) == nullptr)    // Caso o nó não exista na árvore, eu encerro
+            return;
+
         // Buscando o elemento na arvore assim para poder saber quem eh o pai
         while(no != nullptr){
+            no->tam--;  // Diminuo o tamanho do nó a cada passada
+
             if(value < no->chave){  // Se estiver na esquerda da subarvore
                 pai = no;
                 no = no->esq;
@@ -121,10 +127,6 @@ public:
                 break;
             }
         }
-
-        // Caso nó não exista
-        if(no == nullptr)
-            return;
 
         // Caso folha
         if(no->dir == nullptr && no->esq == nullptr){
@@ -183,9 +185,7 @@ public:
                     troca->tam = no->tam-1;  // Diminuo o tamanho da arvore
                 }
             }
-
             delete no;
-
         }
     }
 
@@ -204,7 +204,7 @@ public:
         return pt;  // Retorna o ultimo nó
     }
 
-    node* largest_in_subtree_father(node *raiz_sub){
+    node* largest_in_subtree_father(node *raiz_sub){    // A função percorre a subarvore até chegar no maior elemento salvando o ponteiro pai dele
         node* pt = raiz_sub;
 
         if(pt == nullptr)   // Caso não exista nó
