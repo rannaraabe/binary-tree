@@ -77,7 +77,7 @@ public:
 
     void insert_recursive(node *pt, int value){
         if(pt->chave == value){       // Busca o valor na árvore, antes de adicionar
-            cout << "err-insert: Valor [" << value << "] já está na árvore" << endl;
+            cout << "erro-insert: Valor [" << value << "] já está na árvore!\n" << endl;
             return;
         } else if (pt->chave > value){     // Inserir a esquerda
             if(pt->esq != nullptr)
@@ -106,8 +106,10 @@ public:
         node *no = raiz;        // No começa na raiz
         node *pai = nullptr;    // Pai do nó
 
-        if(search(value) == nullptr)    // Caso o nó não exista na árvore, eu encerro
+        if(search(value) == nullptr){    // Caso o nó não exista na árvore, eu encerro
+            cout << "erro-remove: Valor [" << value << "] não está na árvore!\n" << endl;
             return;
+        }
 
         // Buscando o elemento na arvore assim para poder saber quem eh o pai
         while(no != nullptr){
@@ -241,7 +243,7 @@ public:
         node* no = raiz;
 
         if(no == nullptr)
-            cout << "err-print: Árvore vazia" << endl;
+            cout << "erro-print: Árvore vazia!\n" << endl;
 
         print_recursive(no);
     }
@@ -273,7 +275,7 @@ public:
 
     node* nth_element_recursive(node *no, int n){
         if (raiz->tam < n){
-            cout << "err-nth_element: A árvore não possui essa posição! ";
+            cout << "erro-nth_element: A árvore não possui essa posição!\n";
             return new node(-1e9);
         }
         
@@ -299,7 +301,7 @@ public:
         if(search(value) != nullptr)    // Primeiro procuro se o elemento está na árvore
             return position_recursive(raiz, value, size(raiz->esq), size(raiz->dir));
 
-        cout << "err-position: O elemento não está na árvore! ";
+        cout << "erro-position: O elemento não está na árvore!\n";
         return -1e9;    // Retorno saída qualquer caso o elemente não esteja na árvore
     }
 
@@ -389,7 +391,6 @@ public:
     /**
      * Função retorna uma string com a sequência de visitação da árvore por nível
      */
-
     string to_string(){
         node* no = raiz;
 
@@ -400,7 +401,7 @@ public:
                 return to_string_recursive(no, i);
         }
 
-        return "err-to_string: Árvore está vazia! ";    // Caso não entre na condição a arvore eh vazia
+        return "erro-to_string: Árvore está vazia!\n";    // Caso não entre na condição a arvore eh vazia
 
     }
 
@@ -416,14 +417,11 @@ public:
         }
 
         return arvore;
-
-        // TODO: CORRIGIR
     }
 
      /**
       * Função auxiliar para a função to_string(). Calcula a altura da árvore.
       */ 
-
     int height(){
         node *no = raiz;
         return height_recursive(no);
@@ -436,7 +434,5 @@ public:
         h2 = no->dir != nullptr ? height_recursive(no->dir, h++) : h2 = 0;
 
         return h;
-
-        // TODO: CORRIGIR
     }
 };

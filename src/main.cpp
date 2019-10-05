@@ -4,86 +4,118 @@
  */ 
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <map>
+
 #include "abb.h"
+
 using namespace std;
 
 // g++ -std=c++11 -I include/ src/main.cpp -o out
 // ./out < data/teste.txt
 
-int main(){
-    // TODO
-    // ler os comandos para executar (dá p fazer um switch case, eh pratico)
-    // identificar cada comando e executar
-    
+enum cod_funcoes{
+    BUSCA,
+    INSIRA,
+    REMOVA,
+    ENESIMO,
+    POSICAO,
+    MEDIANA,
+    CHEIA,
+    COMPLETA,
+    IMPRIMA
+};
+
+map<string, cod_funcoes> map_funcoes;
+
+int main(){    
     abb arvore; // Objeto da arvore
-    
     int no;
-    cin >> no;  // Lendo o primeiro nó (nó raiz)
+
+    cin >> no;  // Lendo o primeiro nó (considerando o primeiro nó como a raiz)
     arvore.insert(no);
 
+    // Criando a árvore com todos os valores passados
     while(cin >> no){
         arvore.insert(no);  // Adicionando os demais nós na arvore
     }
 
-    cout << "árvore lida: " << endl;
+    // Printando a árvore inicial, sem nenhuma modificação
+    cout << ">>> Árvore inicial: " << endl;
     arvore.print();
+    cout << "\n" << endl;
+
+    // Lendo arquivo de comandos
+    fstream arquivo;
+	arquivo.open("./data/comandos.txt");
+	
+    string comando_linha; // Para salvar o comando da linha do arquivo
+
+    // Enquanto tiver comandos para ler
+	while(getline(arquivo, comando_linha)){
+        stringstream ler(comando_linha);
+		
+        string funcao;  // Salvar a funcao que está na linha de comando
+		int parametro;  // Salvar o valor que está na linha de comando
+        
+        ler >> funcao;
+        
+        // Chamando a função para cada uma das funções
+		switch(map_funcoes[funcao]){
+            case BUSCA:
+                ler >> parametro;
+                arvore.search(parametro);
+                break;            
+            case INSIRA:
+                ler >> parametro;
+                arvore.insert(parametro);
+                cout << ">> Inserindo elemento " << parametro << endl;
+				break;
+			case REMOVA:
+                ler >> parametro;
+                arvore.remove(parametro);
+                cout << ">> Removendo elemento " << parametro << endl;
+				break;
+			case ENESIMO:
+                ler >> parametro;
+                cout << ">> N-ésimo: " << arvore.nth_element(parametro) << endl;
+				break;
+            case POSICAO:
+                ler >> parametro;
+                cout << ">> Posição: " << arvore.position(parametro) << endl;
+                break;
+            case MEDIANA:
+                cout << ">> Mediana: " << arvore.mediana() << endl;
+                break;
+            case CHEIA:
+                if(arvore.is_full())
+                    cout << ">> Árvore eh cheia" << endl;
+                cout << ">> Árvore não eh cheia" << endl;
+                break;
+            case COMPLETA:
+                if(arvore.is_complete())
+                    cout << ">> Árvore eh completa" << endl;
+                cout << ">> Árvore não eh completa" << endl;
+                break;
+            case IMPRIMA:
+                cout << ">>> Imprimindo árvore: " << arvore.to_string() << endl;
+                break;
+            default:
+                cout << "" << endl;
+                cout << ">> Comando não encontrado! " << endl;
+                break;
+		}
+	}
+
+    arquivo.close();  
+
+    // Só pra testar mesmo
     cout << "" << endl;
-    cout << "" << endl;
+    cout << ">>> Árvore final: " << endl;
+    arvore.print();
+    cout << "" << endl;   
 
-    // cout << arvore.nth_element(0)->chave << endl;   // 10
-    // cout << arvore.nth_element(2)->chave << endl;
-    // cout << arvore.nth_element(9)->chave << endl;
-
-    // arvore.insert(6);   // Novo valor
-    // arvore.insert(40);  // Valor repetido
-    // arvore.insert(4);
-
-    // arvore.remove(40);  // Removendo uma folha
-    // arvore.insert(40);
-
-    // arvore.remove(25);  // Removendo um nó com uma subarvore vazia
-    // arvore.remove(15);  // Removendo o nó raiz
-    // arvore.remove(10);  // Removendo um nó q possui duas subarvores
-
-    // cout << arvore.position(15) << endl;    // null
-    // cout << arvore.position(6) << endl;     // 1
-    // cout << arvore.position(20) << endl;    // 4
-    // cout << arvore.position(10) << endl;    // 2
-    // cout << arvore.position(12) << endl;    // 3
-    // cout << arvore.position(40) << endl;    // 5
-
-    // arvore.insert(15);
-
-    // cout << "-------" << endl;
-    // cout << arvore.position(15) << endl;    // 4
-    // cout << arvore.position(10) << endl;    // 2
-    // cout << arvore.position(6) << endl;     // 1
-    // cout << arvore.position(12) << endl;    // 3
-    // cout << arvore.position(20) << endl;    // 5
-    // cout << arvore.position(40) << endl;    // 6
-
-    cout << "" << endl;
-
-    // if(arvore.is_complete())
-    //     cout << "eh completa" << endl;
-    // else
-    //     cout << "nao eh completa" << endl;
-
-
-    cout << arvore.height() << endl;
-    arvore.to_string();
-    cout << "" << endl;
-
-
-    // if(arvore.is_full())
-    //     cout << "eh cheia" << endl;
-    // else
-    //     cout << "nao eh cheia" << endl;
-
-    // cout << "" << endl;
-    // cout << "árvore final: " << endl;
-    // arvore.print();
-    // cout << "" << endl;    
     return 0;
-
 }
