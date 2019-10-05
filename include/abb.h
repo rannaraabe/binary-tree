@@ -271,7 +271,6 @@ public:
         return nth_element_recursive(raiz, n);
     }
 
-    // TODO corrigir seg fault q ta dando quando busca qualquer elemento que não está na primeira posicao
     node* nth_element_recursive(node *no, int n){
         if (raiz->tam < n){
             cout << "err-nth_element: A árvore não possui essa posição! ";
@@ -339,19 +338,51 @@ public:
      * Função retorna true se a árvore binária for cheia
      */
     bool is_full(){
-        // TODO
-        // Conferir se até o penultimo nivel se <= n-1 folhas
-        // Ainda n sei como fazer mas bora pensar, pensei que só, mas num saiu nao kkk
+        node* no = raiz;
+        return is_full_recursive(no);  // Chamo a função recursiva
+    }
+
+    bool is_full_recursive(node* no){
+        if(no == nullptr)  // Caso a árvore seja vazia
+            return false;
+
+	    if(no->esq == no->dir && no->dir == nullptr)  // Caso até o último nível possua n-1 folhas
+		    return true;
+	    
+        // TODO caso os dois nós dir e esq sejam nulos
+    
     }
 
     /**
      * Função retorna true se a árvore binária for completa (e estritamente binária, no caso)
      */
     bool is_complete(){
-        // TODO
-        // Conferir se cada folha tem os filhos esq e dir nulos, se todas as folhas tiverem eh completa
-        // Conferir tb se cada nó
-        // Cada nó tem que ter o ultimo tamanho igual para todas as folhas, com esq e dir nulos, como salvamos isso pra verificar futuramente ?
+        node* no = raiz;
+        return is_complete_recursive(no);  // Chamo a função recursiva
+    }
+
+    bool is_complete_recursive(node* no){
+        if(no == nullptr)  // Caso a árvore seja vazia
+            return false;
+
+        // Caso o nó possua dois filhos
+        if(no->esq != nullptr && no->dir != nullptr)
+            return true;
+
+        if(no->esq == nullptr){
+            if(is_complete_recursive(no->dir))  // Chamo a funcao para verificar se o filho direito tambem eh nulo
+                return true;
+
+            return false;   // O nó raiz só possui 1 filho
+        } 
+        
+        // Verifico o mesmo para o caso do filho direito ser nulo
+        if(is_complete_recursive(no->esq))  // Verifico se o filho esq tambem eh nulo
+            return true;
+
+        return false;  // O nó raiz só possui 1 filho
+        
+        // TODO teste está dando errado, deve ser alguma besteirinha
     }
 
     /**
@@ -366,10 +397,6 @@ public:
         string arvore = "";
 
         // TODO
-        // Usar um array (lembra o jeito de salvar uma heap), e só concatenar os valores de cada posicao do array na string
-        // Aaaacho que isso funcionaria, mas acho q a complexidade fica n^2
-        // Pode usar uma fila, adicionar os valores da arvore lá
-        // Depois pegar todos e colocar na string e retornar, acho q esse a complixidade fica em n
 
         return arvore;
     }
