@@ -2,23 +2,23 @@
 Este projeto consiste na implementação de Árvore Binária de Busca (ABB) em C++. A implementação do projeto explora conceitos abordados da discplina de Estrutura de Dados Básica II, ministrada pela professora [Sílvia Monteiro](https://sigaa.ufrn.br/sigaa/public/docente/portal.jsf?siape=2859606).
 
 ## Funções implementadas
-- search(int value): busca um valor na ABB.
+- ```search(int value)```: busca um valor na ABB.
 
-- insert(int value): insere um valor na ABB.
+- ```insert(int value)```: insere um valor na ABB.
 
-- remove(int value): remove um valor na ABB.
+- ```remove(int value)```: remove um valor na ABB.
 
-- nth_element(int n): retorna o n-ésimo elemento do percurso em ordem (ordem simétrica) da ABB.
+- ```nth_element(int n)```: retorna o n-ésimo elemento do percurso em ordem (ordem simétrica) da ABB.
 
-- position(int value): retorna a posição ocupada pelo elemento x em um percurso em ordem simétrica na ABB.
+- ```position(int value)```: retorna a posição ocupada pelo elemento x em um percurso em ordem simétrica na ABB.
 
-- int mediana(): retorna o elemento que contém a mediana da ABB. Se a ABB possuir um número par de elementos, retorne o menor dentre os dois elementos medianos.
+- ```int mediana()```: retorna o elemento que contém a mediana da ABB. Se a ABB possuir um número par de elementos, retorne o menor dentre os dois elementos medianos.
 
-- boolean is_full(): retorna verdadeiro se a ABB for uma árvore binária cheia e falso, caso contrário.
+- ```boolean is_full()```: retorna verdadeiro se a ABB for uma árvore binária cheia e falso, caso contrário.
 
-- boolean is_complete(): retorna verdadeiro se a ABB for uma árvore binária completa.
+- ```boolean is_complete()```: retorna verdadeiro se a ABB for uma árvore binária completa.
 
-- string to_string(): retorna uma string que contém a sequência de visitação (percorrimento) da ABB por nível.
+- ```string to_string()```: retorna uma string que contém a sequência de visitação (percorrimento) da ABB por nível.
 
 ## Compilando
 Para compilar, basta executar no terminal o seguinte comando: ```$ g++ -std=c++11 -I include/ src/main.cpp -o out ```
@@ -30,4 +30,5 @@ Para executar o projeto, basta executar no terminal: ```$ ./out < data/arvore.tx
 
 ## Autores
 Ranna Raabe Fernandes da Costa
+
 Frankleiton Levy
